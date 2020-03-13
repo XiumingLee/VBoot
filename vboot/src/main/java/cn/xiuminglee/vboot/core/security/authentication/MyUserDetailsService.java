@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  */
 @Service
 public class MyUserDetailsService implements UserDetailsService {

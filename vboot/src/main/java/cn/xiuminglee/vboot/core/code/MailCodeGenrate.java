@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * 邮箱验证码生成器
  */
 @Component("mailCodeGenrate")

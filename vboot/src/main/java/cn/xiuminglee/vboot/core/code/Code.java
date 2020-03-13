@@ -3,7 +3,7 @@ package cn.xiuminglee.vboot.core.code;
 import java.time.LocalDateTime;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * 验证码实体,
  * 包含验证码和过期时间
  */

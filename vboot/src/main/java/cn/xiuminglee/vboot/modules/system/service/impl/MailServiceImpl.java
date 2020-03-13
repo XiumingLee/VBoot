@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
 /**
- * @author 22
+ * @Author Xiuming Lee
  */
 @Service
 public class MailServiceImpl implements MailService {

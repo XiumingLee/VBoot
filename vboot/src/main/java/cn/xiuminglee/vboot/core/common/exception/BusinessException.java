@@ -1,7 +1,7 @@
 package cn.xiuminglee.vboot.core.common.exception;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  */
 public class BusinessException extends RuntimeException {
 

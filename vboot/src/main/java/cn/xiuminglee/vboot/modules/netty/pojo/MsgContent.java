@@ -5,7 +5,7 @@ import cn.xiuminglee.vboot.modules.system.entity.ChatMsg;
 import java.io.Serializable;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  */
 public class MsgContent implements Serializable {
 

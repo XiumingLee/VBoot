@@ -5,7 +5,7 @@ import io.netty.channel.Channel;
 import java.util.HashMap;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * @Description: 用户id和channel的关联关系处理
  */
 public class UserChannelRel {

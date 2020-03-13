@@ -1,7 +1,7 @@
 package cn.xiuminglee.vboot.core.code;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * 验证码发送者
  */
 public interface CodeSender {

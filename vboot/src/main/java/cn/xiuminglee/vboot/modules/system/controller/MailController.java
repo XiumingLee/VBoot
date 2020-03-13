@@ -18,7 +18,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 import java.util.Map;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  */
 @RestController
 @RequestMapping("/system/mail")

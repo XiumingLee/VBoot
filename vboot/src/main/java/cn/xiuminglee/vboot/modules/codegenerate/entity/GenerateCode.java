@@ -3,7 +3,7 @@ package cn.xiuminglee.vboot.modules.codegenerate.entity;
 import java.util.Arrays;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * GenerateCode实体类
  */
 public class GenerateCode {

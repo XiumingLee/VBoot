@@ -3,7 +3,7 @@ package cn.xiuminglee.vboot.core.code;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * 验证码验证器
  */
 public interface ValidateCode {

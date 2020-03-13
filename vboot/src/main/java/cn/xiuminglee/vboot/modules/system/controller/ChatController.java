@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  */
 @RequestMapping("/chat")
 @RestController

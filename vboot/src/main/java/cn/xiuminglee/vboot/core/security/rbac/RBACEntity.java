@@ -1,7 +1,7 @@
 package cn.xiuminglee.vboot.core.security.rbac;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * 依赖存放当前用户的可访问的url和请求方法。
  */
 public class RBACEntity {

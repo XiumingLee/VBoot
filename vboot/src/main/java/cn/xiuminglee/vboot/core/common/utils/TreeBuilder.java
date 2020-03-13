@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * 根据id，parentid，构建树形结构，放到children
  */
 public class TreeBuilder<T extends Node> {

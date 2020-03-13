@@ -5,7 +5,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * 用于监听Spring Boot启动完成，然后启动Netty
  */
 @Component("nettyBooter")

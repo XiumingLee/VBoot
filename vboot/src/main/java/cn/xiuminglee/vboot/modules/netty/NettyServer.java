@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * netty 服务类
  */
 @Component("nettyServer")

@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * 字典查询结果返回包装
- * @author 22
+ * @Author Xiuming Lee
  */
 public class DictWapper extends ReturnBaseWapper {
 

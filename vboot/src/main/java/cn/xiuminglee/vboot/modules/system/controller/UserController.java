@@ -1,5 +1,6 @@
 package cn.xiuminglee.vboot.modules.system.controller;
 
+import cn.xiuminglee.vboot.config.VBootProperties;
 import cn.xiuminglee.vboot.core.common.exception.BusinessException;
 import cn.xiuminglee.vboot.core.common.utils.QiniuUtil;
 import cn.xiuminglee.vboot.core.common.utils.SimpleResponse;
@@ -32,6 +33,9 @@ public class UserController {
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
+    private VBootProperties vBootProperties;
+
+    @Autowired
     private UserService userService;
     @Autowired
     private UserRoleService userRoleService;
@@ -39,7 +43,7 @@ public class UserController {
     private RoleService roleService;
     @Autowired
     private UserDeptService userDeptService;
-    @Autowired
+    @Autowired(required = false)
     private QiniuUtil qiniuUtil;
 
     /**
@@ -254,7 +258,7 @@ public class UserController {
         }
 
         if(!(StringUtils.isEmpty(oldAvatar))){
-            String s = StringUtils.substringAfter(oldAvatar, qiniuUtil.getQiniuPrefixPath());
+            String s = StringUtils.substringAfter(oldAvatar, vBootProperties.getQiniu().getPrefixPath());
             Boolean aBoolean = qiniuUtil.deleteByKey(s);
             if (aBoolean){
                 return new SimpleResponse(200,"上传成功并删除旧头像",json);

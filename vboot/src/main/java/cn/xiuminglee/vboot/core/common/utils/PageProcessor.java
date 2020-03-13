@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * 继承自Mybatis PLus的page类，用于特殊数据的返回使用。
- * @author 22
+ * @Author Xiuming Lee
  */
 public class PageProcessor<T> extends Page<T> {
     /**

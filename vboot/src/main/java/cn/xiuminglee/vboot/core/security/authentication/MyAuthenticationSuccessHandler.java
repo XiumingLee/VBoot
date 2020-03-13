@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * 自定义的认证成功处理器
  */
 @Component("myAuthenticationSuccessHandler")

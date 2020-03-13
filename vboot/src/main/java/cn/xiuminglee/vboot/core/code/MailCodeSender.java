@@ -9,7 +9,7 @@ import org.thymeleaf.context.Context;
 import javax.annotation.Resource;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * 邮件验证码发送器
  */
 @Component("mailCodeSender")

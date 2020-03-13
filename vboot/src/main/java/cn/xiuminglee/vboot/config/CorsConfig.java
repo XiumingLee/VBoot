@@ -5,7 +5,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * Spring Boot 跨域配置
  */
 @Configuration

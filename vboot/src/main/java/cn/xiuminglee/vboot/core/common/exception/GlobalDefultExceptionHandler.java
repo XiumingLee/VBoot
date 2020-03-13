@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * 全局异常处理
  */
 @ControllerAdvice

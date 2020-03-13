@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  */
 public class MyUserDetails extends User {
 

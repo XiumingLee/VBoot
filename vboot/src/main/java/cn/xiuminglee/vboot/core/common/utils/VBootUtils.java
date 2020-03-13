@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.*;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * VBoot系统工具类
  */
 public class VBootUtils {

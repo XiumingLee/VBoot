@@ -7,7 +7,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  * 验证邮箱验证码是否正确
  */
 @Component("mailValidateCode")

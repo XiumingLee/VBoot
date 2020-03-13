@@ -80,7 +80,7 @@
               <el-button type="success" @click="toggleShow" size="small">上传
                 <i class="el-icon-upload el-icon--right"></i>
               </el-button>
-              <my-upload field="file" @crop-upload-success="cropUploadSuccess" v-model="show" :width="300" :height="300" :url="baseUrl+'/system/user/me/avatar'" withCredentials img-format="png"></my-upload>
+              <my-upload field="file" @crop-upload-success="cropUploadSuccess" v-model="show" :width="300" :height="300" :url="'/system/user/me/avatar'" withCredentials img-format="png"></my-upload>
             </div>
           </div>
         </div>
@@ -205,7 +205,6 @@ export default {
       oriInfoForm: {},
       editBtn: true,
       show: false,
-      baseUrl: process.env.BASE_API,
       /**绑定邮箱 */
       mailVisible: false,
       mailLoading: false,

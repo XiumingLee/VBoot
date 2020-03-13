@@ -6,3 +6,4 @@
 /**/node_modules/
 /**/.mvn/
 .vscode/
+/**/application.yaml

@@ -31,18 +31,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 //放行PreFlightRequest的请求
 //                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .antMatchers("/login", "/loginMust","/isLogin","/isLogout","/system/userUrls","/testErr").permitAll()
+                .antMatchers("/login", "/loginMust","/isLogin","/isLogout","/system/userUrls").permitAll()
                 .antMatchers("/system/user/me/*","/system/mail/me/codegenerate","/chat/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/system/menu","/system/role/*","/system/dept/deptsTree","/system/dict/dict/*").authenticated()
                 .antMatchers("/system/code/**").hasRole("ADMIN")
                 .anyRequest()
                 .access("@rbacService.hasPermission(request,authentication)");
-//                .authenticated();
-        //访问 /logout 表示用户注销，并清空session
+
         http.logout().logoutUrl("/logout").logoutSuccessUrl("/isLogout");
-        // 关闭csrf
         http.csrf().disable();
-        //开启跨域
         http.cors();
     }
 

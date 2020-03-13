@@ -39,6 +39,8 @@ public class UserController {
     private RoleService roleService;
     @Autowired
     private UserDeptService userDeptService;
+    @Autowired
+    private QiniuUtil qiniuUtil;
 
     /**
      * 查询所有用户信息，用于在用户管理界面显示在列表位置。
@@ -216,9 +218,6 @@ public class UserController {
         }
     }
 
-    @Autowired
-    private QiniuUtil qiniuUtil;
-
     /**
      * 更新头像
      * @param file
@@ -255,7 +254,7 @@ public class UserController {
         }
 
         if(!(StringUtils.isEmpty(oldAvatar))){
-            String s = StringUtils.substringAfter(oldAvatar, QiniuUtil.VBOOT_QINIU_PATH);
+            String s = StringUtils.substringAfter(oldAvatar, qiniuUtil.getQiniuPrefixPath());
             Boolean aBoolean = qiniuUtil.deleteByKey(s);
             if (aBoolean){
                 return new SimpleResponse(200,"上传成功并删除旧头像",json);

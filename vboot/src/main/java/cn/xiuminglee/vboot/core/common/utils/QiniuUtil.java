@@ -1,5 +1,6 @@
 package cn.xiuminglee.vboot.core.common.utils;
 
+import cn.xiuminglee.vboot.config.VBootProperties;
 import cn.xiuminglee.vboot.core.common.exception.BusinessException;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
@@ -11,6 +12,7 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,27 +20,20 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
- * @author 22
+ * @Author Xiuming Lee
  */
-@Component("qiniuUtil")
 public class QiniuUtil implements InitializingBean {
-    @Value("${vboot.qiniu.access-key}")
-    private String accessKey;
-    @Value("${vboot.qiniu.secret-key}")
-    private String secretKey;
-    @Value("${vboot.qiniu.qiniu-prefix-path}")
-    public String qiniuPrefixPath;
-    @Value("${vboot.qiniu.bucket-name}")
-    private String bucketName;
-    @Value("${vboot.qiniu.folder}")
-    private String qiniuFolder;
+    
+    @Autowired
+    private VBootProperties vBootProperties;
 
     private Auth auth;
     private Configuration cfg;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        auth = Auth.create(accessKey, secretKey);
+        String qiniuFolder = vBootProperties.getQiniu().getFolder();
+        auth = Auth.create(vBootProperties.getQiniu().getAccessKey(), vBootProperties.getQiniu().getSecretKey());
         cfg = new Configuration(Zone.zone1());
     }
 
@@ -48,12 +43,12 @@ public class QiniuUtil implements InitializingBean {
         //构造一个带指定Zone对象的配置类
         UploadManager uploadManager = new UploadManager(cfg);
 
-        String upToken = auth.uploadToken(bucketName);
+        String upToken = auth.uploadToken(vBootProperties.getQiniu().getBucketName());
 
 //        修改文件名称，以免重复
         //文件扩展名
         String fileExtName = oldName.substring(oldName.lastIndexOf(".") + 1);
-        String fileName = qiniuFolder + UUID.randomUUID() + "." + fileExtName;
+        String fileName = vBootProperties.getQiniu().getFolder() + UUID.randomUUID() + "." + fileExtName;
         //创建上传对象
         //调用put方法上传  这里是使用的Byte类型上传的。还有其他方法
         Response res = uploadManager.put(bytes, fileName, upToken);
@@ -62,7 +57,7 @@ public class QiniuUtil implements InitializingBean {
 //        获取返回的文件名
         String key = putRet.key;
 //        获取图片路径
-        String filePath = qiniuPrefixPath + key;
+        String filePath = vBootProperties.getQiniu().getPrefixPath() + key;
 
         return filePath;
     }
@@ -75,17 +70,12 @@ public class QiniuUtil implements InitializingBean {
     public Boolean deleteByKey(String key) {
         BucketManager bucketManager = new BucketManager(auth, cfg);
         try {
-            bucketManager.delete(bucketName, key);
+            bucketManager.delete(vBootProperties.getQiniu().getBucketName(), key);
             return true;
         } catch (QiniuException e) {
             e.printStackTrace();
             throw new BusinessException(999,"删除七牛云原有头像失败！");
         }
-    }
-
-
-    public String getQiniuPrefixPath() {
-        return qiniuPrefixPath;
     }
 
 

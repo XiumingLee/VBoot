@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xiuminglee.vboot.modules.system.mapper.MenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <!--<resultMap id="BaseResultMap" type="Menu">-->
+        <!--<id column="id" property="id" jdbcType="INTEGER"/>-->
+        <!--<result column="path" property="path" jdbcType="VARCHAR"/>-->
+        <!--<result column="component" property="component" javaType="java.lang.Object"/>-->
+        <!--<result column="name" property="name" jdbcType="VARCHAR"/>-->
+        <!--<result column="iconCls" property="iconCls" jdbcType="VARCHAR"/>-->
+        <!--<result column="keepAlive" property="keepAlive" jdbcType="BIT"/>-->
+        <!--<result column="parentId" property="parentid" jdbcType="INTEGER"/>-->
+        <!--<result column="ismenu" property="ismenu" jdbcType="INTEGER"/>-->
+        <!--<result column="enabled" property="enabled" jdbcType="INTEGER"/>-->
+        <!--<association property="meta" javaType="MenuMeta">-->
+            <!--<result column="keepAlive" property="keepAlive"/>-->
+            <!--<result column="requireAuth" property="requireAuth"/>-->
+        <!--</association>-->
+        <!--<collection property="roles" ofType="Role">-->
+            <!--<id column="rid" property="id"/>-->
+            <!--<result column="rname" property="name"/>-->
+            <!--<result column="rnamezh" property="nameZh"/>-->
+        <!--</collection>-->
+        <!--<collection property="children" ofType="Menu">-->
+            <!--<id column="id2" property="id" jdbcType="INTEGER"/>-->
+            <!--<result column="path2" property="path" jdbcType="VARCHAR"/>-->
+            <!--<result column="component2" property="component" jdbcType="VARCHAR"/>-->
+            <!--<result column="name2" property="name" jdbcType="VARCHAR"/>-->
+            <!--<result column="iconCls2" property="iconCls" jdbcType="VARCHAR"/>-->
+            <!--<result column="ismenu2" property="ismenu" jdbcType="INTEGER"/>-->
+            <!--<result column="enabled2" property="enabled" jdbcType="INTEGER"/>-->
+            <!--<association property="meta" javaType="MenuMeta">-->
+                <!--<result column="keepAlive2" property="keepAlive"/>-->
+                <!--<result column="requireAuth2" property="requireAuth"/>-->
+            <!--</association>-->
+            <!--<collection property="children" ofType="Menu">-->
+                <!--<id column="id3" property="id"/>-->
+                <!--<result column="name3" property="name" jdbcType="VARCHAR"/>-->
+            <!--</collection>-->
+        <!--</collection>-->
+    <!--</resultMap>-->
+    <resultMap id="BaseResultMap" type="cn.xiuminglee.vboot.modules.system.entity.Menu">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="path" property="path" jdbcType="VARCHAR"/>
+        <result column="component" property="component" javaType="java.lang.Object"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <!--<result column="iconCls" property="iconCls" jdbcType="VARCHAR"/>-->
+        <result column="keepAlive" property="keepAlive" jdbcType="BIT"/>
+        <result column="parentId" property="parentid" jdbcType="INTEGER"/>
+        <result column="pids" property="pids" jdbcType="INTEGER"/>
+        <result column="ismenu" property="ismenu" jdbcType="INTEGER"/>
+        <result column="enabled" property="enabled" jdbcType="INTEGER"/>
+        <association property="meta" javaType="cn.xiuminglee.vboot.modules.system.entity.MenuMeta">
+            <result column="keepAlive" property="keepAlive"/>
+            <result column="requireAuth" property="requireAuth"/>
+            <result column="name" property="title"/>
+            <result column="iconCls" property="icon"/>
+        </association>
+        <collection property="roles" ofType="cn.xiuminglee.vboot.modules.system.entity.Role">
+            <id column="rid" property="id"/>
+            <result column="rname" property="name"/>
+            <result column="rnamezh" property="nameZh"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="BaseResultMap2" type="cn.xiuminglee.vboot.modules.system.entity.Menu">
+        <id column="value" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="parentId" property="parentid" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="findMenuByUserId" resultMap="BaseResultMap">
+                select
+                m1.id,
+                m1.path,
+                m1.component,
+                m1.iconCls,
+                m1.name,
+                m1.parentId,
+                m1.pids,
+                m1.requireAuth,
+                m1.ismenu,
+                m1.enabled,
+                r.id as rid,
+                r.name as rname,
+                r.nameZh as rnamezh
+                from
+                vb_menu m1,
+                vb_role r
+                where
+                m1.id !=0
+                and
+                m1.id
+                      in(
+                          select
+                           mr.mid
+                           from
+                           vb_user_role ur,
+                           vb_menu_role mr
+                           where
+                           ur.rid=mr.rid
+                           and
+                           ur.uid=#{id}
+                          )
+                and
+                m1.enabled=1
+                and
+                m1.ismenu=1
+                and
+                m1.delete=0
+                order by
+                m1.id
+    </select>
+    <!--查询用于菜单界面选择层级的。-->
+    <select id="findMenuOption" resultType="cn.xiuminglee.vboot.core.common.entity.MenuOption">
+        select
+        id,id value,name label,parentid
+        from
+        vb_menu m
+        where
+        m.id !=0
+        and
+        m.delete = 0
+
+    </select>
+    <select id="findUserUrlById" resultType="cn.xiuminglee.vboot.core.security.rbac.RBACEntity">
+        select url,method
+        from
+        vb_menu m
+        where
+        m.ismenu = 2
+        and
+        m.delete = 0
+        and
+        m.id in(
+                select vmr.mid from vb_menu_role vmr where vmr.rid = (
+                                                            select vur.rid from vb_user_role vur where vur.uid = #{id}
+                                                           )
+               )
+    </select>
+
+</mapper>

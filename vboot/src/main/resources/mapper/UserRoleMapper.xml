@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xiuminglee.vboot.modules.system.mapper.UserRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.xiuminglee.vboot.modules.system.entity.UserRole">
+        <id column="id" property="id" />
+        <result column="uid" property="uid" />
+        <result column="rid" property="rid" />
+    </resultMap>
+
+    <select id="getRoleByUserId" resultType="java.lang.String">
+        select name
+        from vb_role
+        where id = (
+              select rid
+              from vb_user_role
+              where uid = #{id}
+        )
+    </select>
+
+</mapper>

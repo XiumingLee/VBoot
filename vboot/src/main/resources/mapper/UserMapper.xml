@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xiuminglee.vboot.modules.system.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.xiuminglee.vboot.modules.system.entity.User">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="address" property="address" />
+        <result column="expired" property="expired" />
+        <result column="locked" property="locked" />
+        <result column="enabled" property="enabled" />
+        <result column="delete" property="delete" />
+        <result column="createbyid" property="createbyid" />
+        <result column="createdate" property="createdate" />
+        <result column="updatebyid" property="updatebyid" />
+        <result column="updatedate" property="updatedate" />
+    </resultMap>
+    <select id="selectAllUserPortion" resultType="java.util.Map">
+        select
+        u.id,u.name,u.username,u.address,u.mobilephone,u.mail,r.id roleId, r.nameZh roleName,d.id deptId,d.name deptName
+        from
+        vb_user u
+        left join vb_role r on r.id = (select ur.rid from vb_user_role ur where ur.uid = u.id)
+        left join vb_dept d on d.id = (select ud.did from vb_user_dept ud where ud.uid = u.id)
+    </select>
+    <select id="selectUserInfoNoPass" resultType="cn.xiuminglee.vboot.modules.system.entity.User">
+        select
+        id,name,username,avatar,sex,mobilephone,mail,address
+        from
+        vb_user
+        where
+        id = #{id}
+    </select>
+
+</mapper>

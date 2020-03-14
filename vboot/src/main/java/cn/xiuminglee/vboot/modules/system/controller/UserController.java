@@ -14,9 +14,9 @@ import cn.xiuminglee.vboot.modules.system.service.RoleService;
 import cn.xiuminglee.vboot.modules.system.service.UserDeptService;
 import cn.xiuminglee.vboot.modules.system.service.UserRoleService;
 import cn.xiuminglee.vboot.modules.system.service.UserService;
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -235,11 +236,11 @@ public class UserController {
         User userDB = userService.selectOne(new EntityWrapper<User>().eq("id", userDetails.getId()));
         String oldAvatar = userDB.getAvatar();
 
-        JSONObject json = new JSONObject();
+        Map json = Maps.newHashMap();
         //源文件名
         String originalFilename = file.getOriginalFilename();
-        byte[] bytes = new byte[0];
-        String uploadName = null;
+        byte[] bytes;
+        String uploadName;
         try {
             // 获取文件的bytes形式
             bytes = file.getBytes();

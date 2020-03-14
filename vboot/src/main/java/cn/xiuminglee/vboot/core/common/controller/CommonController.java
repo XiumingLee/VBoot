@@ -21,36 +21,14 @@ import java.util.Map;
  * @Author Xiuming Lee
  */
 @RestController
-public class CommonController extends AbstractErrorController {
+public class CommonController {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    public CommonController(ErrorAttributes errorAttributes) {
-        super(errorAttributes);
-    }
 
     @GetMapping("/loginMust")
     public SimpleResponse loginMust(){
         return new SimpleResponse(401,"请先登录！");
-    }
-
-    @Override
-    public String getErrorPath() {
-        return "/error";
-    }
-
-    /**
-     * web错误统一拦截controller
-     * @param webRequest
-     * @return
-     */
-    @RequestMapping("${server.error.path:${error.path:/error}}")
-    public SimpleResponse globalError(ServletWebRequest webRequest){
-        //调用父类方法获取错误信息
-        Map<String, Object> errorAttributes = super.getErrorAttributes(webRequest.getRequest(), true);
-        String method = webRequest.getRequest().getMethod();
-        VBootUtils.errLogSave(new Log("业务代码错误日志！",(Integer) errorAttributes.get("status"),(String) errorAttributes.get("message"),(String) errorAttributes.get("trace"),method+">>"+errorAttributes.get("path")));
-        return new SimpleResponse(999,(String) errorAttributes.get("message"),errorAttributes);
     }
 
     /**
@@ -60,7 +38,6 @@ public class CommonController extends AbstractErrorController {
     @GetMapping("/isLogin")
     public SimpleResponse isLogin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        logger.info(String.valueOf(authentication));
         //判断是不是登录
         if (authentication.getName().equals("anonymousUser")){
             return new SimpleResponse(401,"请先登录！");
@@ -73,14 +50,4 @@ public class CommonController extends AbstractErrorController {
         return new SimpleResponse(200,"退出当前用户成功！将返回登陆页面！");
     }
 
-    /**
-     * 测试错误用例。
-     * @return
-     */
-    @GetMapping("/testErr")
-    public SimpleResponse testErr(){
-//        int i = 1/0;
-        throw  new BusinessException(999,"该用户不存在！");
-//        return new SimpleResponse(200,"测试错误！");
-    }
 }

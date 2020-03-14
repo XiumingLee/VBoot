@@ -2,6 +2,7 @@ package cn.xiuminglee.vboot.modules.system.controller;
 
 import cn.xiuminglee.vboot.core.common.utils.SimpleResponse;
 import cn.xiuminglee.vboot.core.common.utils.TreeBuilder;
+import cn.xiuminglee.vboot.core.common.utils.TreeBuilder2;
 import cn.xiuminglee.vboot.core.security.authentication.MyUserDetails;
 import cn.xiuminglee.vboot.core.security.rbac.RBACEntity;
 import cn.xiuminglee.vboot.modules.system.entity.Menu;
@@ -31,6 +32,7 @@ public class SystemController {
         //获取当前登录的用户id
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Menu> menuByUserId = menuService.findMenuByUserId(userDetails.getId());
+        //Menu menu = TreeBuilder2.builder(menuByUserId);
         String buildTree = new TreeBuilder<Menu>().buildTree(menuByUserId);
         return new SimpleResponse(200,"请求菜单列表成功！",buildTree);
     }

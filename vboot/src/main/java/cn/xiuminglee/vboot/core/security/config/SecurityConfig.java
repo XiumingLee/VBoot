@@ -29,12 +29,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(myAuthenticationFailureHandler);
         http.authorizeRequests()
-                //放行PreFlightRequest的请求
-//                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .antMatchers("/login", "/loginMust","/isLogin","/isLogout","/system/userUrls").permitAll()
+                .antMatchers("/css/**","/fonts/**","/img/**","/js/**","/favicon.ico","/**/*.html").permitAll()
+                .antMatchers("/login", "/loginMust","/isLogin","/isLogout","/system/userUrls","/").permitAll()
                 .antMatchers("/system/user/me/*","/system/mail/me/codegenerate","/chat/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/system/menu","/system/role/*","/system/dept/deptsTree","/system/dict/dict/*").authenticated()
-                .antMatchers("/system/code/**").hasRole("ADMIN")
                 .anyRequest()
                 .access("@rbacService.hasPermission(request,authentication)");
 

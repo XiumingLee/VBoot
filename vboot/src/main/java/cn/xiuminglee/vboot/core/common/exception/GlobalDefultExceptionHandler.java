@@ -31,6 +31,7 @@ public class GlobalDefultExceptionHandler {
     public SimpleResponse defultExcepitonHandler(HttpServletRequest request, Exception e) {
         /** 异常的具体信息*/
         String details = VBootUtils.stackTraceElementToString(e.getStackTrace());
+        logger.error("全局异常捕获：",e);
         VBootUtils.errLogSave(new Log("自定义/抛出异常！",999,e.getMessage(),details,""));
         return new SimpleResponse(999,e.getMessage(),e.getStackTrace());
     }

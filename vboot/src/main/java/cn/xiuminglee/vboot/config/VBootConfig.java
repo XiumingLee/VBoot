@@ -26,4 +26,6 @@ public class VBootConfig {
     public QiniuUtil qiniuUtil(){
         return new QiniuUtil();
     }
+
+
 }

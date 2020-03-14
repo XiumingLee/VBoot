@@ -1,5 +1,4 @@
-// import Cookies from 'js-cookie'
-import {  get } from './request'
+import { get } from './request'
 import store from '@/store'
 
 /**
@@ -27,7 +26,7 @@ export function getUserUrls(){
     reject(err);
   })
 }
-/**判断当前用户是否有权发送请求 *///
+/**判断当前用户是否有权发送请求 */
 export function hasPermission(url,method){
   const urls = store.state.user.urls;
   let is_true = false;

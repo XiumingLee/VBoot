@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.enums.IdType;
 import java.util.List;
 
 public class Node<T> {
+
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     private Integer parentid;

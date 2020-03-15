@@ -16,6 +16,9 @@ public class VBootProperties {
     /** 文件上传类型，默认上传到数据库，后期开发 */
     private String fileUploadType = "default";
 
+    /**  netty 服务端口 */
+    private int nettyServerPort = 8088;
+
 
     @Data
     public class QiniuProperties{

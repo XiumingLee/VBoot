@@ -1,5 +1,6 @@
 package cn.xiuminglee.vboot.modules.netty;
 
+import cn.xiuminglee.vboot.config.VBootProperties;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
@@ -7,6 +8,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Component;
  */
 @Component("nettyServer")
 public class NettyServer {
+
     private Logger log = LoggerFactory.getLogger(getClass());
     /**
      * 保证NettyServer为单例。
@@ -43,11 +47,8 @@ public class NettyServer {
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new NettyServerInitialzer());
     }
-    public void start(){
-        this.future = server.bind(8088);
-        log.info("Netty WebSocket Server 启动成功！");
+    public void start(int port){
+        this.future = server.bind(port);
+        log.info("Netty WebSocket Server 在{}端口启动成功！",port);
     }
-    /**
-     * 此处的优雅关闭已经不需要了，因为我们已经将netty依托给了Spring Boot，由他帮我们管理。
-     */
 }

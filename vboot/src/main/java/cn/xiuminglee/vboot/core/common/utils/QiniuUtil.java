@@ -32,7 +32,6 @@ public class QiniuUtil implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        String qiniuFolder = vBootProperties.getQiniu().getFolder();
         auth = Auth.create(vBootProperties.getQiniu().getAccessKey(), vBootProperties.getQiniu().getSecretKey());
         cfg = new Configuration(Zone.zone1());
     }

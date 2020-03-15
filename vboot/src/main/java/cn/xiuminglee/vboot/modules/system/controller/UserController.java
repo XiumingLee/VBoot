@@ -108,7 +108,6 @@ public class UserController {
             userRole.setRid(roleId);
             //查询数据库是否有该用户角色记录
             UserRole uid = userRoleService.selectOne(new EntityWrapper<UserRole>().eq("uid", id));
-            System.out.println(uid);
             boolean rb;
             if(uid != null){
                 //如果数据库中的角色id和传来的相同则不需要修改

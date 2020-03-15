@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Date;
 
 public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
-    private Logger log = LoggerFactory.getLogger(getClass());
+    private static Logger log = LoggerFactory.getLogger(ChatHandler.class);
 
     /**
      *用于记录和管理所有客户端(或理解为用户)的channle
@@ -72,7 +72,6 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             if (receiverChannel == null) {
                 // TODO channel为空代表用户离线，推送消息（JPush，个推，小米推送）
             } else {
-                // 当receiverChannel不为空的时候 TODO 发送消息
                 receiverChannel.writeAndFlush(
                         new TextWebSocketFrame(JsonUtils.objectToJson(chatMsg)));
             }
@@ -87,10 +86,8 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
         }
 
         else if(action.equals(MsgActionEnum.KEEPALIVE.type)){
-            System.out.println("收到来自channel为[" + currentChannel + "]的心跳包...");
+            log.info("收到来自channel为{}的心跳包...",currentChannel);
         }
-//        log.info("接受到的数据：" + dataContent);
-//        clients.writeAndFlush(new TextWebSocketFrame(JsonUtils.objectToJson(dataContent.getChatMsg())));
     }
     /**
      * 当客户端连接服务端之后（打开连接）
@@ -103,12 +100,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("客户端断开，channle对应的长id为："
-                + ctx.channel().id().asLongText());
-        System.out.println("客户端断开，channle对应的短id为："
-                + ctx.channel().id().asShortText());
-
-        // 当触发handlerRemoved，ChannelGroup会自动移除对应客户端的channel
+        log.info("客户端断开，channle对应的短id为：{}",ctx.channel().id().asShortText());
         clients.remove(ctx.channel());
     }
 

@@ -13,7 +13,9 @@ public class NettyBooter implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (event.getApplicationContext().getParent() == null){
-            NettyServer.getInstance().start();
+            String property = event.getApplicationContext().getEnvironment().getProperty("vboot.netty-server-port");
+            int port = Integer.parseInt(property);
+            NettyServer.getInstance().start(port);
         }
     }
 }

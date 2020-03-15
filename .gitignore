@@ -7,3 +7,4 @@
 /**/.mvn/
 .vscode/
 /**/application.yaml
+/vboot/src/main/resources/static/

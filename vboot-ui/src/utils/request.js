@@ -1,14 +1,14 @@
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import store from '../store'
-// import { getToken } from '@/utils/auth'
+import Config from '@/config';
 import router from '@/router'
 
 // 创建axios实例
 const service = axios.create({
   withCredentials: true,
   baseURL: process.env.BASE_API, // api 的 base_url
-  timeout: 5000 // 请求超时时间
+  timeout: Config.REQUEST_TIMEOUT // 请求超时时间
 });
 
 // request拦截器

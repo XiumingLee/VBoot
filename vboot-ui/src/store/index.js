@@ -6,6 +6,7 @@ import chats from './modules/chats'
 import routers from './modules/routers'
 import getters from './getters'
 import { chat } from '@/utils/chat'
+import Config from '@/config';
 //websocket相关需要
 import VueNativeSock from 'vue-native-websocket'
 
@@ -71,7 +72,7 @@ const store = new Vuex.Store({
     // 重新连接
     SOCKET_RECONNECT(state, count) {
       //websocket  用于在用户的登录后在创建websocket链接和断开连接后重新连接。 重点！！！！
-      Vue.use(VueNativeSock, 'ws://localhost:8088/ws', { store: store })
+      Vue.use(VueNativeSock, `ws://${Config.SERVER_URL}:${Config.NETTY_SERVER_PORT}/ws`, { store: store })
     },
     //重现连接出错时
     SOCKET_RECONNECT_ERROR(state) {

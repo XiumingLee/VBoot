@@ -26,8 +26,6 @@ public class RbacServiceImpl  implements RbacService{
         if (principal instanceof UserDetails){
             //获取当去用户id
             Integer userId = ((MyUserDetails) principal).getId();
-//            String method = request.getMethod();
-//            System.out.println(method);
             //读取用户所拥有的所有url
             List<RBACEntity> urls = menuService.findUserUrlById(userId);
 

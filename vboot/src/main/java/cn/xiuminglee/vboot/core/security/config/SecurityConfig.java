@@ -2,6 +2,7 @@ package cn.xiuminglee.vboot.core.security.config;
 
 import cn.xiuminglee.vboot.core.security.authentication.MyAuthenticationFailureHandler;
 import cn.xiuminglee.vboot.core.security.authentication.MyAuthenticationSuccessHandler;
+import cn.xiuminglee.vboot.core.security.authentication.VBootAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -20,6 +21,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
     @Autowired
     MyAuthenticationFailureHandler myAuthenticationFailureHandler;
+    @Autowired
+    VBootAccessDeniedHandler vbootAccessDeniedHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -39,6 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout().logoutUrl("/logout").logoutSuccessUrl("/isLogout");
         http.csrf().disable();
         http.cors();
+
+        // AccessDeniedHandler处理器 拒绝访问处理器
+        http.exceptionHandling().accessDeniedHandler(vbootAccessDeniedHandler);
     }
 
 

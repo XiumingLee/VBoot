@@ -71,46 +71,32 @@
     </resultMap>
 
     <select id="findMenuByUserId" resultMap="BaseResultMap">
-                select
-                m1.id,
-                m1.path,
-                m1.component,
-                m1.iconCls,
-                m1.name,
-                m1.parentId,
-                m1.pids,
-                m1.requireAuth,
-                m1.ismenu,
-                m1.enabled,
-                r.id as rid,
-                r.name as rname,
-                r.nameZh as rnamezh
-                from
-                vb_menu m1,
-                vb_role r
-                where
-                m1.id !=0
-                and
-                m1.id
-                      in(
-                          select
-                           mr.mid
-                           from
-                           vb_user_role ur,
-                           vb_menu_role mr
-                           where
-                           ur.rid=mr.rid
-                           and
-                           ur.uid=#{id}
-                          )
-                and
-                m1.enabled=1
-                and
-                m1.ismenu=1
-                and
-                m1.delete=0
-                order by
-                m1.id
+        SELECT
+            m1.id,
+            m1.path,
+            m1.component,
+            m1.iconCls,
+            m1.NAME,
+            m1.parentId,
+            m1.pids,
+            m1.requireAuth,
+            m1.ismenu,
+            m1.enabled,
+            r.id AS rid,
+            r.NAME AS rname,
+            r.nameZh AS rnamezh
+        FROM
+            vb_menu m1
+            LEFT JOIN vb_menu_role mr ON m1.id = mr.mid
+            LEFT JOIN vb_role r ON r.id = mr.rid
+            LEFT JOIN vb_user_role ur ON ur.rid = r.id
+        WHERE
+            ur.uid = #{id}
+            AND m1.enabled = 1
+            AND m1.ismenu = 1
+            AND m1.DELETE = 0
+        ORDER BY
+            m1.id
     </select>
     <!--查询用于菜单界面选择层级的。-->
     <select id="findMenuOption" resultType="cn.xiuminglee.vboot.core.common.entity.MenuOption">
